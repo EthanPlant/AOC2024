@@ -1,4 +1,5 @@
 use anyhow::*;
+use itertools::Itertools;
 use core::num;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -33,33 +34,17 @@ fn parse_input<R: BufRead>(reader: R) -> Vec<i32> {
 }
 
 fn split_columns(numbers: Vec<i32>) -> (Vec<i32>, Vec<i32>) {
-    let left = numbers
-        .clone()
-        .iter()
+    numbers
+        .into_iter()
         .enumerate()
-        .filter_map(|(idx, &val)| {
-            if idx % 2 == 0 {
-                Some(val)
-            } else {
-                None
+        .partition_map(|(i, val)| {
+            match i % 2 {
+                0 => itertools::Either::Left(val),
+                1 => itertools::Either::Right(val),
+                _ => unreachable!()
             }
         })
-        .collect();
-
-    let right = numbers
-       .iter()
-        .enumerate()
-        .filter_map(|(idx, &val)| {
-            if idx % 2 != 0 {
-                Some(val)
-            } else {
-                None
-            }
-        })
-        .collect();
-
-    (left, right)
-}
+    }
 
 fn main() -> Result<()> {
     start_day(DAY);
