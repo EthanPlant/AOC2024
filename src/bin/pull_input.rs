@@ -55,6 +55,7 @@ async fn download_input(day: u32) -> Result<()> {
         .await
         .context("Failed to read http response body")?;
 
+    println!("{}", resp);
     fs::write(format!("input/{day}.txt"), resp).context("Failed to write input to file")?;
     Ok(())
 }
