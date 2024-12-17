@@ -62,12 +62,11 @@ fn get_safety_factor(robots: &Vec<Robot>) -> usize {
     quad_1 * quad_2 * quad_3 * quad_4
 }
 
-fn get_num_positions(robots: &Vec<Robot>) -> usize {
+fn are_all_unique(robots: &Vec<Robot>) -> bool {
     robots
         .iter()
         .map(|robot| robot.pos)
-        .unique()
-        .count()
+        .all_unique()
 }
 
 fn print_robots(robots: &Vec<Robot>) {
@@ -111,16 +110,15 @@ fn main() -> Result<()> {
         // print_robots(&robots);
         // println!();
         let mut steps = 0;
-        loop {
-            for i in 0..robots.len() {
-                robots[i].step(1);
+        while !are_all_unique(&robots) {
+            for robot in &mut robots {
+                robot.step(1);
             }
+
             steps += 1;
-            if get_num_positions(&robots) == robots.len() {
-                //print_robots(&robots);
-                break;
-            }
         }
+
+        print_robots(&robots);
 
         Ok(steps)
     }
