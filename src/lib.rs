@@ -1,3 +1,5 @@
+pub mod grid;
+
 pub fn start_day(day: &str) {
     println!("Advent of Code 2024 - Day {:0>2}", day);
 }
