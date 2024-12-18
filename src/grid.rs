@@ -25,6 +25,12 @@ pub enum Dir {
     RIGHT,
 }
 
+impl Dir{
+    pub fn iter() -> impl Iterator<Item = Self> {
+        [Self::UP, Self::LEFT, Self::DOWN, Self::RIGHT].into_iter()
+    }
+}
+
 impl From<Dir> for Vector {
     fn from(value: Dir) -> Self {
         match value {
