@@ -140,6 +140,8 @@ impl Maze {
             }
         }
 
+        println!("{}", best_spots.len());
+
         (score, best_spots)
     }
 
